@@ -1,7 +1,8 @@
 <?php 
 include_once 'models/model.php';
 include_once 'templates/admin.php';
-function index_admin($items){
+function index_admin(){
+	$items = get_data_items();
    foreach ($items as $item) { ?>
     <tr>
         <th scope="row"><?php echo $item['id'] ?></th>
