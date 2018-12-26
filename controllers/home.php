@@ -1,11 +1,18 @@
 <?php 
 include_once 'models/model.php';
 
+function index_home(){
+include_once 'templates/header.php';
+
 $items = get_data_items();
 $images = get_data_images();
 $items = write_arr_priceDisc_image($items,$images);
+$items = getId($items);
 $description  =  " Некоторый быстрый пример текста, который будет основан на названии карты и составляет основную часть содержимого карты. " ;
-include 'templates/home.php';
+include_once 'templates/home.php';
+include_once 'templates/footer.php';
+
+}
 
 function get_price($item){
     $stock = $item['stock'];
@@ -41,4 +48,30 @@ function write_arr_priceDisc_image($items,$images){
     return $result;
 }
 
-?>
+function getId($items){
+    if(isset($_GET['id'])){
+        $items = array_filter($items,"back");
+    }
+    return $items;
+}
+
+function back($item){
+    return $_GET['id'] === $item['id'];
+}
+
+function userName(){
+    if (isset($_POST['userName'])) {
+      $_SESSION ['name'] = $_POST['userName'];
+    }
+    if (!empty($_SESSION ['name'])) { ?>
+    <div style = "text-align:center;"><b> <?php echo "Привет " . $_SESSION ['name'] . " !";?></b> </div>
+    <?php
+    }else{
+      include 'templates/components/form.php';
+    }
+}
+function getDataCookie(){
+    if (!isset($_COOKIE['myCookie'])){
+        include 'templates/components/cookie.php';
+    }
+}

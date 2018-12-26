@@ -1,7 +1,9 @@
 <div class="container">
 <div class="row">
 
-<?php include 'components/card.php'; 
+<?php foreach ($items as $item) {
+include 'components/card.php'; 
+}
 ?>
 
 </div>

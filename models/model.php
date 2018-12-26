@@ -24,4 +24,20 @@ $images = [
 ];
 	return $images;
 }
+
+$items = get_data_items();
+$out = fopen('c://xampp/htdocs/myproject/assets/file/file.csv', 'w+');
+
+foreach($items as $item){   
+    fputcsv($out,$item,';');
+}   
+
+fclose($out);
+
+$out = fopen('c://xampp/htdocs/myproject/assets/file/file.csv', 'r'); 
+while (!feof($out)) { 
+     $array[] = fgetcsv($out, 0, ";"); 
+} 
+array_pop($array);
+
 ?>
