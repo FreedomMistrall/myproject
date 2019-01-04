@@ -1,19 +1,23 @@
 <?php 
-function get_data_items(){
-$items = [
-    ['id' => '1', 'name' => 'Монитор',      'price' => '1200.00', 'stock' => '5', 'disc' => '10'],
-    ['id' => '2', 'name' => 'Компьютер',    'price' => '4200.00', 'stock' => '7', 'disc' => '10'],
-    ['id' => '3', 'name' => 'Ноутбук',      'price' => '7700.00', 'stock' => '2', 'disc' => '10'],
-    ['id' => '4', 'name' => 'Принтер',      'price' => '1800.00', 'stock' => '1', 'disc' => '10'],
-    ['id' => '5', 'name' => 'Стол',         'price' => '1100.00', 'stock' => '0', 'disc' => '20'],
-    ['id' => '6', 'name' => 'Стул',         'price' => '2200.00', 'stock' => '0', 'disc' => '20'],
-    ['id' => '7', 'name' => 'Шкаф',         'price' => '1260.00', 'stock' => '8', 'disc' => '20'],
-    ['id' => '8', 'name' => 'Кресло',       'price' => '4250.00', 'stock' => '9', 'disc' => '20'],
-    ['id' => '9', 'name' => 'Диван',        'price' => '9800.00', 'stock' => '1', 'disc' => '30'],
-];
-	return $items;
+class Model 
+{
+    public $description = "Some quick example text to build on the card title and make up the bulk of the card's content.";
+
+    function getDataItems(){
+    $db = Database::getInstance();
+    $db_connect = $db->connection;
+    $result = $db_connect->query('SELECT * FROM products');
+    $dataItems = $result->fetch_all(MYSQLI_ASSOC);
+
+    $dataItemsObj = [];
+        foreach ($dataItems as $item) {
+            $dataItemsObj[] = new Item($item);
+        }
+        return $dataItemsObj;
 }
-function get_data_images(){
+
+
+function getDataImages(){
 $images = [
     ['id' => '1', 'img' => 'https://c.radikal.ru/c27/1812/51/0ab71bffd797.jpg'],
     ['id' => '2', 'img' => 'https://d.radikal.ru/d32/1812/0d/15d4dc782522.jpg'],
@@ -23,9 +27,43 @@ $images = [
     ['id' => '8', 'img' => 'https://c.radikal.ru/c12/1812/70/634877a85140.jpg']
 ];
 	return $images;
+
+}
 }
 
-$items = get_data_items();
+class Item
+{
+    public $id;
+    public $name;
+    public $price;
+    public $count;
+    public $disc;
+    public $description;
+    public $img;
+
+    function __construct($item) {
+        $this->id = $item['id'];
+        $this->name = $item['name'];
+        $this->count = $item['stock'];
+        $this->disc = $item['disc'];
+        $this->price = $this->getPrice($item['price']);
+        $this->description = $item['description'];
+        $this->img = $item['img'];
+
+    }
+    protected function getPrice($price) {
+        if ($this->count > 2){
+                $price = $price - ($price * $this->disc / 100);
+            }
+        if ($this->count == 0){
+                $price = 'Нет в наличии';
+            }
+        return $price;
+    }
+}
+
+
+/*$items=$model->getDataItems();
 $out = fopen('c://xampp/htdocs/myproject/assets/file/file.csv', 'w+');
 
 foreach($items as $item){   
@@ -40,4 +78,4 @@ while (!feof($out)) {
 } 
 array_pop($array);
 
-?>
+*/

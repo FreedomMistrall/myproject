@@ -1,3 +1,4 @@
 <?php 
-getDataCookie();
+$cookie = new Users();
+$cookie->getDataCookie();
 
