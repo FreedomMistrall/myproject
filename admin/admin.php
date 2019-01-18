@@ -9,4 +9,14 @@
     </tr>
     </thead>
     <tbody>
- 
+<?php
+ foreach ($items as $item) { ?>
+        <tr>
+            <th scope="row"><?php echo $item->id ?></th>
+            <td><?php echo $item->name ?></td>
+            <td><?php echo $item->price ?></td>
+            <td><?php echo $item->count ?></td>
+            <td><?php echo $item->disc ?></td>
+        </tr>
+    <?php } ?>
+        </tbody>

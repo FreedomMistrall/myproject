@@ -1,21 +1,20 @@
 <?php 
+include_once '../models/model.php';
+
 class AdminController
 {
- public function index(){
-    include_once 'admin.php';
-    include_once '../models/model.php';
+    public function index(){
+
     $itemObj = new Model();
     $items = $itemObj->getDataItems();
+    $data = [
+    'items'=> $items
+    ];
+    $this->view('admin', $data);
+    }
 
-   foreach ($items as $item) { ?>
-    <tr>
-        <th scope="row"><?php echo $item->id ?></th>
-        <td><?php echo $item->name ?></td>
-        <td><?php echo $item->price ?></td>
-        <td><?php echo $item->count ?></td>
-        <td><?php echo $item->disc ?></td>
-    </tr>
-<?php } ?>
-    </tbody>
-<?php } 
-}?>
+    public function view($template,$data){
+    extract($data);
+    include($template . '.php');
+    }
+}

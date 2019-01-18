@@ -16,11 +16,7 @@
   </div>
 </div>
 		<span class="navbar-text">
-		    	<?php 
-				$user = new Users();
-				$user->userName();
-				?>
+                    <p><a href="http://localhost/myproject/login"><b>Авторизация</b></a></p>
+		    	<?php ?>
 		</span>
 </nav>
-
-
