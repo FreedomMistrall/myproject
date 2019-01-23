@@ -1,3 +1,10 @@
+<?php
+if (isset($_SESSION['errors'])){
+    echo implode("<br>",$_SESSION['errors']);
+}
+unset($_SESSION['errors']);
+?>
+
 <div class="container mregister" style = "text-align:center">
 <div id="login">
 <form action="http://localhost/myproject/registration" id="registerform" method="post"name="registerform">

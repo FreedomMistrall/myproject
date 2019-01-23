@@ -1,12 +1,13 @@
 <?php 
 include_once 'templates/header.php';
 include_once 'templates/navibar.php';
-include_once 'models/model.php'; ?>
+
+?>
 
 <div class="container">
 	<div class="row">
 		
-		<?php foreach ($items as $item){
+		<?php foreach ($oneItem as $item){
 		include 'components/card.php'; 
 		} ?>
 
@@ -16,7 +17,7 @@ include_once 'models/model.php'; ?>
 <b>Недавно просмотренные:</b>
 <div class="container">
 	<div style="width: 70%;">
-		<div class="row">
+		<div class="row"> 
 		<?php
                     foreach ($last3ItemsId as $item){
                         include 'components/card.php';

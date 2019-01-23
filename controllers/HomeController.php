@@ -4,9 +4,9 @@ class HomeController extends Controller {
     public function index(){
         $model = new ItemModel();
         $items=$model->getDataItems();
-        $items=$this->getId($items);
         $data = [
         'items' => $items,
+        'oneItem'=>$this->getId($items),
         'cookieOk' => $this->getCookie(),
         'last3ItemsId' => $this->last3ItemsId($items),
         ];

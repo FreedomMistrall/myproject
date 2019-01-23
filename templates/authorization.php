@@ -1,3 +1,9 @@
+<?php
+if($_POST['email'] = null) {
+    echo 'Неверный E-mail или пароль.';
+}
+?>
+
 <div class="container mlogin" style = "text-align:center">
     <div id="login">
         <form action="http://localhost/myproject/login" id="loginform" method="post"name="loginform">

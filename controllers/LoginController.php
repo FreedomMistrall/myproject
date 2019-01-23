@@ -11,17 +11,19 @@ class LoginController extends Controller {
         if (!empty($_POST)) {
             $email = $_POST['email'];
             $user = $this->model->read(['email' => $email]);
+
             if(!$user) {
-                redirect('login');
+                echo 'Неверный E-mail или пароль.';
+                //redirect('login');
             }
             $password = $_POST['password'];
             if (md5($password) == $user['password']) {
                 $_SESSION['login_user_id'] = $user['id'];
                 
-            redirect('/myproject');
-            echo 'Hello '. $user['username'];
+            //$user = $this->model->getId();
+                redirect('/myproject');
             } else {
-                redirect('login');
+                //redirect('login');
             }
             
         } else {
@@ -32,13 +34,13 @@ class LoginController extends Controller {
     public function register(){
         if (!empty($_POST)) {
             $errors = $this->checkRegister(); 
-            var_dump($errors);
 // валидация
             if (!empty($errors)) {
-//                $oldData = [
-//                    'email' => $_POST['email']
+                $_SESSION['errors'] = $errors;
+//              $oldData = [
+//                  'email' => $_POST['email']
 //                ];
-              // redirect('registration');
+                redirect('registration');
             }else{
             $data = $_POST;
             $userId = $this->model->create($data);
@@ -65,6 +67,6 @@ class LoginController extends Controller {
                 }
                 return $errors;  
         }
-                               
+                    
     
 }

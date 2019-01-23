@@ -1,15 +1,17 @@
 <?php 
 session_start();
 require_once 'config/config.php';
-require_once 'core/database.php';
-require_once 'controllers/Controller.php';
-require_once 'controllers/HomeController.php';
-require_once 'controllers/LoginController.php';
 include_once 'core/function.php';
-include_once 'models/Model.php';
-include_once 'models/ItemModel.php';
-include_once 'models/UserModel.php';
 
+spl_autoload_register(function ($class_name) {
+    if(file_exists('models/' . $class_name . '.php')){
+        include 'models/' . $class_name . '.php';
+    } elseif(file_exists('controllers/' . $class_name . '.php')) {
+        include 'controllers/' . $class_name . '.php';
+    }else{
+        include 'core/' . $class_name . '.php';
+    }
+});
 
 if ((isset ($_POST['formCheck'])) and (isset($_POST['formSubmit']))){
 	setcookie('myCookie', 'userCookie', time()+3600*24*365); 
@@ -23,9 +25,25 @@ $db_connect = $db->connection;
 $routes = [
     ['url' => '', 'do' => 'HomeController/index'],
     ['url' => 'login', 'do' => 'LoginController/login'],
-    ['url' => 'registration', 'do' => 'LoginController/register']
+    ['url' => 'registration', 'do' => 'LoginController/register'],
+    //['url' => 'admin', 'do' => 'AdminController/index']
+
 ];
-$query = rtrim($_SERVER['QUERY_STRING'],'/');
+function remove($url){
+    if($url){
+        $params = explode('&', $url,2);
+        if(false === strpos($params[0], '=')){
+            return rtrim($params[0],'/');
+        }else{
+            return '';
+        }
+    }
+};
+
+$query = remove(rtrim($_SERVER['QUERY_STRING'],'/'));
+
+
+ 
 $route = array_filter($routes, function ($el) use($query) {
     return ($el['url'] == $query);
 });

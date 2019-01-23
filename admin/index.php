@@ -1,7 +1,7 @@
 <?php 
 require_once '../config/config.php';
 require_once '../core/database.php';
-include_once 'admin_controllers.php';
+include_once 'AdminController.php';
 require_once '../templates/header.php';
 
 $config = config('db');
