@@ -3,18 +3,22 @@ class Model {
     
     protected $connect;
     protected $table;
-    function __construct() {
+
+    function __construct()
+    {
         $db = Database::getInstance();
         $this->connect = $db->connection;
     }
-    public function delete($id) {
+    public function delete($id)
+    {
         $stmt = $this->connect->prepare("DELETE FROM $this->table WHERE id = ? ");
         $stmt->bind_param('i', $id);
         $result = $stmt->execute();
         return $result;
     }
     
-    public function getSomeId(){
+    public function readId($id)
+    {
         $stmt = $this->connect->prepare("SELECT * FROM $this->table WHERE id = ?");
         $stmt->bind_param('i', $id);
         $stmt->execute();

@@ -1,10 +1,18 @@
 <?php
 
-function redirect($param){
+function redirect($param)
+{
     header("Location:" . "$param");
     exit();
 }
 
-function debug($data) {
+function debug($data)
+{
     echo '<pre>' . print_r($data, true) . '</pre>';
+}
+
+function splashMessage($array=[],$oldData=[])
+{
+    $_SESSION['errors'] = $array;
+    $_SESSION['oldData'] = $oldData;
 }

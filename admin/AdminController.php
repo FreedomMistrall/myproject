@@ -1,6 +1,7 @@
 <?php
 include_once '../models/Model.php';
 include_once '../models/ItemModel.php';
+include_once '../core/Item.php';
 
 
 class AdminController

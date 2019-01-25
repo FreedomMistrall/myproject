@@ -1,6 +1,6 @@
 <?php 
 require_once '../config/config.php';
-require_once '../core/database.php';
+require_once '../core/Database.php';
 include_once 'AdminController.php';
 require_once '../templates/header.php';
 

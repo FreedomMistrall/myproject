@@ -1,7 +1,11 @@
 <?php
-if (isset($_SESSION['errors'])){
-    echo implode("<br>",$_SESSION['errors']);
-}
+require_once 'templates/header.php';
+if (isset($_SESSION['errors']))
+{?>
+<div class="alert alert-danger" role="alert">
+    <p align="center"><?=$_SESSION['errors'];?></p>
+</div>
+<?php }
 unset($_SESSION['errors']);
 ?>
 
