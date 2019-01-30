@@ -25,14 +25,14 @@ class UserController extends Controller
 
         }
         else {
-            $this->сhengeProfil();
+            $this->сhangeProfile();
 
             $this->view('personaluser', $data);
 
         }
     }
 
-    public function сhengeProfil()
+    public function сhangeProfile()
     {
         $user = Auth::user();
         if(isset($_POST['submit'])) {
