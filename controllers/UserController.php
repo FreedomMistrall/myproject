@@ -21,13 +21,13 @@ class UserController extends Controller
         ];
         if(isset($_POST['edit'])) {
 
-            $this->view('editprofil', $data);
+            $this->view('editprofile', $data);
 
         }
         else {
             $this->сhangeProfile();
 
-            $this->view('personaluser', $data);
+            $this->view('userprofile', $data);
 
         }
     }
