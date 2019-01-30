@@ -2,29 +2,57 @@
 
 class UserController extends Controller
 {
-    public function some()
+    function __construct()
+    {
+        $this->model = new UserModel();
+    }
+
+    public function user()
     {
         $user = Auth::user();
-        $userAdmin = Auth::isAdmin();
-        if(!$user)
-        {
-            redirect('login');
-        }
 
-        $data = [];
-        $this->view('personaluser',$data);
+        saveUrl();
+        if(!$user) {
+            redirect('/login/login');
+        }
+        unset($_SESSION['url']);
+        $data = [
+            'user' => $user,
+        ];
+        if(isset($_POST['edit'])) {
+
+            $this->view('editprofil', $data);
+
+        }
+        else {
+            $this->сhengeProfil();
+
+            $this->view('personaluser', $data);
+
+        }
     }
 
-    public static function actionDownImg()
+    public function сhengeProfil()
     {
-        if(isset($_POST['submit']))
-        {
-            $img_url = $_FILES['img_url']['name'];
-            $tmp_name_img= $_FILES['img_url']['tmp_name'];
-            $size_img = $_FILES['img_url']['size'];
-            debug($_FILES);
-
+        $user = Auth::user();
+        if(isset($_POST['submit'])) {
+            if (!empty($_FILES['img_url']['name'])) {
+                $uploaddir = 'assets/avatar/';
+                $file = pathinfo($_FILES['img_url']['name']);
+                $file = $file['extension'];
+                $_FILES['img_url']['name'] = md5($user['id']) . '.' . $file;
+                $uploadfile = $uploaddir . $_FILES['img_url']['name'];
+                move_uploaded_file($_FILES['img_url']['tmp_name'], $uploadfile);
+                $avatar = $_FILES['img_url']['name'];
+            }
+            else{
+                $avatar = null;
+            }
+            $username = $_POST['login'];
+            var_dump($username);
+            $user = $this->model->update($user['id'], $username, $avatar);
         }
-        return true;
+        return $user;
     }
+
 }

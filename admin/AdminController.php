@@ -1,21 +1,20 @@
 <?php
-include_once '../models/Model.php';
-include_once '../models/ItemModel.php';
-include_once '../core/Item.php';
-
+include_once'templates/header.php';
 
 class AdminController
 {
-    public function index(){
+    public function index()
+    {
         $model = new ItemModel();
         $items = $model->getDataItems();
         $data = [
-        'items' => $items
+            'items' => $items
         ];
         $this->view('admin', $data);
     }
 
-    public function view($template,$data){
+    public function view($template,$data)
+    {
         extract($data);
         include($template . '.php');
     }
