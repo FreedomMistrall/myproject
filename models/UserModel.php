@@ -25,18 +25,26 @@ class UserModel extends Model {
         return $data;
     }
 
-    public function update($id, $username, $avatar = null)
+    public function update($id, $username, $password = null, $avatar = null)
     {
-        if($avatar != null) {
-            $stmt = $this->connect->prepare("UPDATE users SET username = ?, avatar = ? WHERE id = $id");
-            $stmt->bind_param('ss', $username,$avatar);
-        }
-        else{
-            $stmt = $this->connect->prepare("UPDATE users SET username = ? WHERE id = $id");
-            $stmt->bind_param('s', $username);
-        }
+        $stmt = $this->connect->prepare("UPDATE users SET username = ? WHERE id = $id");
+        $stmt->bind_param('s', $username);
         $stmt->execute();
         $result = $stmt->insert_id;
+
+        if($avatar != null) {
+            $stmt = $this->connect->prepare("UPDATE users SET avatar = ? WHERE id = $id");
+            $stmt->bind_param('s', $avatar);
+            $stmt->execute();
+            $result = $stmt->insert_id;
+        }
+        if ($password != null){
+            $stmt = $this->connect->prepare("UPDATE users SET password = ? WHERE id = $id");
+            $stmt->bind_param('s', $password);
+            $stmt->execute();
+            $result = $stmt->insert_id;
+        }
+
         return $result;
     }
 }

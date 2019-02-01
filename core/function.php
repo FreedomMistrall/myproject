@@ -1,8 +1,15 @@
 <?php
 
-function saveUrl()
+function saveUrl($data = false)
 {
-    $_SESSION['url'] = $_SERVER['REQUEST_URI'];
+    if ($data) {
+        $_SESSION['url'] = $data;
+    }
+    else{
+        $url = $_SESSION['url'];
+        $_SESSION['url'] = '';
+        return $url;
+    }
 }
 
 function redirect($param)
@@ -18,13 +25,13 @@ function debug($data)
 
 function splashMessage($data = false, $class = 'info')
 {
-    if($data) {
+    if ($data) {
         $_SESSION['errors'] = $data;
         $_SESSION['error_class'] = $class;
     }
     else {
-        $message['data'] = $_SESSION['errors'];
-        $message['class'] = $_SESSION['error_class'];
+        $message['data'] = isset($_SESSION['errors']) ? $_SESSION['errors'] : '';
+        $message['class'] = isset($_SESSION['error_class']) ? $_SESSION['error_class'] : '';
         $_SESSION['errors'] = '';
         $_SESSION['error_class'] = '';
         return $message;
@@ -37,7 +44,7 @@ function oldData($data = false)
         $_SESSION['old_data'] = $data;
     }
     else {
-        $message = $_SESSION['old_data'];
+        $message = isset($_SESSION['old_data']) ? $_SESSION['old_data'] : '';
         $_SESSION['old_data'] = '';
         return $message;
     }
@@ -52,7 +59,8 @@ function routeUrl($name)
         ['name' => 'registr', 'url' => '/login/registr', 'do' => 'LoginController/registr'],
         ['name' => 'admin', 'url' => '/admin/index', 'do' => 'AdminController/index'],
         ['name' => 'logout', 'url' => '/login/logout', 'do' => 'LoginController/logout'],
-        ['name' => 'user', 'url' => '/user/user', 'do' => 'UserController/user']
+        ['name' => 'user', 'url' => '/user/user', 'do' => 'UserController/user'],
+        ['name' => 'user', 'url' => '/user/edit', 'do' => 'UserController/edit']
     ];
 
     foreach ($routes as $route){

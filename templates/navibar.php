@@ -16,7 +16,10 @@
   </div>
 </div>
 		<span class="navbar-text">
+            <?php
+            if(!$user):
+            ?>
                     <p><a href="<?=route('login'); ?>"><b>Авторизация</b></a></p>
-		    	<?php ?>
+		    <?php endif;?>
 		</span>
 </nav>

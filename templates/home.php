@@ -4,7 +4,7 @@ include_once 'navibar.php';
 ?>
 
 <?php
-    if(isset($_SESSION['loginId'])):
+    if($user):
 ?>
         <p style="color: darkslategray"><b>Привет <?= $user['username']?></b></p>
         <p><a href="<?=route('user'); ?>" style="color: #1b1cbc"><b>Личный кабинет</b></a></p>
@@ -24,24 +24,31 @@ include_once 'navibar.php';
 
 <div class="container">
 	<div class="row">
-		
-		<?php foreach ($oneItem as $item){
-		include 'components/card.php'; 
-		} ?>
 
+		<?php
+            foreach ($oneItem as $item){
+		        include 'components/card.php';
+		    }
+        ?>
 	</div>
 </div>
 
+<?php
+    if(!empty($last3ItemsId)): ?>
 <b>Недавно просмотренные:</b>
+
 <div class="container">
 	<div style="width: 70%;">
-		<div class="row"> 
-		<?php
-                    foreach ($last3ItemsId as $item){
-                        include 'components/card.php';
-                    } ?>
+		<div class="row">
+
+		    <?php
+                foreach ($last3ItemsId as $item){
+                    include 'components/card.php';
+                }
+            ?>
+
 		</div>
 	</div>
 </div>
-
+<?php endif; ?>
 <?php include_once 'templates/footer.php'; ?>

@@ -14,7 +14,7 @@ function searchClass($class_name)
         }
     }
 }
-var_dump($_POST);
+
 if ((isset ($_POST['formCheck'])) and (isset($_POST['formSubmit'])))
 {
 	setcookie('myCookie', 'userCookie', time()+3600*24*365); 
@@ -33,7 +33,8 @@ $routes = [
     ['name' => 'registr', 'url' => '/login/registr', 'do' => 'LoginController/registr'],
     ['name' => 'admin', 'url' => '/admin/index', 'do' => 'AdminController/index'],
     ['name' => 'logout', 'url' => '/login/logout', 'do' => 'LoginController/logout'],
-    ['name' => 'user', 'url' => '/user/user', 'do' => 'UserController/user']
+    ['name' => 'user', 'url' => '/user/user', 'do' => 'UserController/user'],
+    ['name' => 'user', 'url' => '/user/edit', 'do' => 'UserController/edit']
 
 ];
 
