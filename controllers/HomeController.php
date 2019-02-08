@@ -5,9 +5,16 @@ class HomeController extends Controller
     public function index()
     {
         $model = new ItemModel();
-        $items=$model->getDataItems();
+        $limit = 3;
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $total = $model->count();
+        $pag = new Pagination($page, $limit, $total);
+        $start = $pag->getStart();
+        $pagination = $pag->pagination();
+        $items=$model->getDataItems($start, $limit);
         $user = Auth::user();
         $userAdmin = Auth::isAdmin();
+
         $data = [
         'items' => $items,
         'oneItem'=>$this->getId($items),
@@ -15,6 +22,7 @@ class HomeController extends Controller
         'last3ItemsId' => $this->last3ItemsId($items),
             'user' => $user,
             'userAdmin' => $userAdmin,
+            'pagination' => $pagination,
         ];
         $this->view('home',$data);
     }

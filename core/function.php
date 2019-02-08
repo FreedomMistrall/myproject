@@ -12,9 +12,14 @@ function saveUrl($data = false)
     }
 }
 
-function redirect($param)
+function redirect($param = false)
 {
-    header("Location:" . "$param");
+    if($param){
+        $redirect = $param;
+    }else{
+        $redirect = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '/' ;
+    }
+    header("Location:" . "$redirect");
     exit();
 }
 
@@ -57,12 +62,19 @@ function routeUrl($name)
         ['name' => 'show', 'url' => '/home/show', 'do' => 'HomeController/index'],
         ['name' => 'login', 'url' => '/login/login', 'do' => 'LoginController/login'],
         ['name' => 'registr', 'url' => '/login/registr', 'do' => 'LoginController/registr'],
-        ['name' => 'admin', 'url' => '/admin/index', 'do' => 'AdminController/index'],
         ['name' => 'logout', 'url' => '/login/logout', 'do' => 'LoginController/logout'],
         ['name' => 'user', 'url' => '/user/user', 'do' => 'UserController/user'],
-        ['name' => 'user', 'url' => '/user/edit', 'do' => 'UserController/edit']
+        ['name' => 'user', 'url' => '/user/edit', 'do' => 'UserController/edit'],
+        ['name' => 'admin', 'url' => '/admin/show', 'do' => 'AdminController/show'],
+        ['name' => 'edit', 'url' => '/admin/edit', 'do' => 'AdminController/add'],
+        ['name' => 'deleteAdmin', 'url' => '/admin/delete', 'do' => 'AdminController/delete'],
+        ['name' => 'category', 'url' => '/category/show', 'do' => 'CategoryController/show'],
+        ['name' => 'editCategory', 'url' => '/category/edit', 'do' => 'CategoryController/add'],
+        ['name' => 'deleteCategory', 'url' => '/category/delete', 'do' => 'CategoryController/delete'],
+        ['name' => 'cart', 'url' => '/cart/show', 'do' => 'CartController/show'],
+        ['name' => 'add', 'url' => '/cart/add', 'do' => 'CartController/addCart'],
+        ['name' => 'deleteCart', 'url' => '/cart/delete', 'do' => 'CartController/deleteCart'],
     ];
-
     foreach ($routes as $route){
         if($name == $route['name']){
             return $route['url'];

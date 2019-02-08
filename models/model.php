@@ -26,5 +26,13 @@ class Model {
         $data = $result->fetch_assoc();
         return $data;
     }
+    public function  count()
+    {
+        $stmt = $this->connect->prepare("SELECT COUNT(*) FROM $this->table");
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data = $result->fetch_row();
+        return $data[0];
+    }
 }
     

@@ -4,6 +4,8 @@ class UserController extends Controller
 {
     use Validation;
 
+    protected $model;
+
     function __construct()
     {
         $this->model = new UserModel();

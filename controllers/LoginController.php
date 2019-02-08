@@ -10,6 +10,7 @@ class LoginController extends Controller
     {
         $this->model = new UserModel();
     }
+
     public function login()
     {
         if (!empty($_POST)) {

@@ -7,11 +7,13 @@ class Item {
     public $count;
     public $disc;
     public $description;
+    public $category_id;
     public $img;
 
     function __construct($item){
         $this->id = $item['id'];
         $this->name = $item['name'];
+        $this->category_id = $item['category_id'];
         $this->count = $item['stock'];
         $this->disc = $item['disc'];
         $this->price = $this->getPrice($item['price']);
@@ -33,7 +35,7 @@ class Item {
     protected function getNoImage(){
         $img = $this->img;
         if(!$this->img){
-            $img = 'https://b.radikal.ru/b06/1901/33/29c551ee879e.png';
+            $img = 'No_image.jpg';
         }return $img;
     }
 }
