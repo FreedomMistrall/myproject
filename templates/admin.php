@@ -1,5 +1,7 @@
-<p><a href="<?= route('home') ?>">На главную</a></p>
-<br><br><br>
+<p style="margin-left: 10px;"><a href="<?= route('home') ?>">На главную</a></p>
+<br>
+<p style="margin-left: 10px;"><a href="<?= route('category') ?>">Добавить/Редактировать категории</a></p>
+<br>
 <p style="margin-left: 10px;"><a href="<?= route('edit') ?>">Добавить</a></p>
 
 <table class="table table-bordered">
@@ -27,7 +29,7 @@
             <td><?= $item->price ?></td>
             <td><?= $item->count ?></td>
             <td><?= $item->disc ?></td>
-            <td><?= $item->img ?></td>
+            <td><a href="<?= route('imageShow', ['id'=>$item->id])?>"><?= $item->img ?></a></td>
             <td><a href="<?= route('deleteAdmin')?>/?id=<?=$item->id?>">Удалить</a></td>
         </tr>
     <?php endforeach; ?>

@@ -45,10 +45,10 @@ function splashMessage($data = false, $class = 'info')
 
 function oldData($data = false)
 {
-    if($data) {
+    if($data){
         $_SESSION['old_data'] = $data;
     }
-    else {
+    else{
         $message = isset($_SESSION['old_data']) ? $_SESSION['old_data'] : '';
         $_SESSION['old_data'] = '';
         return $message;
@@ -74,6 +74,9 @@ function routeUrl($name)
         ['name' => 'cart', 'url' => '/cart/show', 'do' => 'CartController/show'],
         ['name' => 'add', 'url' => '/cart/add', 'do' => 'CartController/addCart'],
         ['name' => 'deleteCart', 'url' => '/cart/delete', 'do' => 'CartController/deleteCart'],
+        ['name' => 'order', 'url' => '/order/show', 'do' => 'CartController/order'],
+        ['name' => 'product', 'url' => '/product/show', 'do' => 'OneItemController/show'],
+        ['name' => 'imageShow', 'url' => '/image/show', 'do' => 'ImagesController/show'],
     ];
     foreach ($routes as $route){
         if($name == $route['name']){
@@ -92,4 +95,30 @@ function route($name,$params=[])
         $routeName .= $key . '=' . $param . '&';
     }
     return rtrim($routeName, '&');
+}
+
+function sendMail($data)
+{
+    $transport = (new Swift_SmtpTransport('smtp.ukr.net', 465, 'ssl'))
+        ->setUsername('mistrall911@ukr.net')
+        ->setPassword('20048711321');
+
+// Create the Mailer using your created Transport
+    $mailer = new Swift_Mailer($transport);
+
+// Create a message
+    extract($data);
+/* Помещаем заготовку письма в буфер */
+    ob_start();
+    require 'templates/orderProduct.php';
+    $some = ob_get_clean();
+/* Помещаем заготовку письма в буфер */
+    $message = (new Swift_Message("Заказ № $orderId"))
+        ->setFrom(['mistrall911@ukr.net' => 'Shop'])
+        ->setTo(["$email" => "$name"])
+        ->setBody("$some", 'text/html');
+
+// Send the message
+    $result = $mailer->send($message);
+    return $result;
 }

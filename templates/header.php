@@ -16,3 +16,4 @@
     <p align="center"><?=$error['data'];?></p>
     </div>
 </header>
+<body>

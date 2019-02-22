@@ -2,12 +2,14 @@
 class Model {
     
     protected $connect;
+    protected $pdo;
     protected $table;
 
     function __construct()
     {
         $db = Database::getInstance();
         $this->connect = $db->connection;
+        $this->pdo = $db->pdo;
     }
     public function delete($id)
     {

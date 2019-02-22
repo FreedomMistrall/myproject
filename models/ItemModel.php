@@ -16,14 +16,9 @@ class ItemModel extends Model {
         return $dataItemsObj;
     }
 
-    public function create()
+    public function create($data)
     {
-        $name = $_POST['name'];
-        $description = $_POST['desc'];
-        $price = $_POST['price'];
-        $stock = $_POST['stock'];
-        $disc = $_POST['disc'];
-        $image = $_POST['img'];
+        extract($data);
         $stmt = $this->connect->prepare("INSERT INTO products (name, description, price, stock, disc, image) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->bind_param('ssdiis', $name, $description, $price, $stock, $disc,$image);
         $stmt->execute();
@@ -31,19 +26,51 @@ class ItemModel extends Model {
         return $result;
     }
 
-    public function update($id)
+    public function update($id,$data)
     {
-        $name = $_POST['name'];
-        $description = $_POST['desc'];
-        $price = $_POST['price'];
-        $stock = $_POST['stock'];
-        $disc = $_POST['disc'];
-        $image = $_POST['img'];
+        extract($data);
         $stmt = $this->connect->prepare("UPDATE products SET name =?, description = ?, price = ?, stock = ?, disc = ?, image = ? WHERE id = $id");
         $stmt->bind_param('ssdiis', $name, $description, $price, $stock, $disc,$image);
         $stmt->execute();
         $result = $stmt->insert_id;
         return $result;
+    }
+
+    public function listItems($filter = [], $fields = null)
+    {
+        $sql = " FROM $this->table ";
+        if (!empty($filter)) {
+            $sql = $sql . ' WHERE ';
+            if (key_exists('cat', $filter)) {
+                $sql .= 'category_id = ?';
+                debug($sql);
+            }
+            if (key_exists('priceM', $filter)) {
+                $sql .= 'price < ?';
+            }
+            /*
+            if (key_exists('ids', $filter)) {
+                $sql .= 'id IN ?';
+                $filter['ids'] = "(". join(",", $filter['ids']) .")";
+            }
+            */
+        }
+        if(!$fields) {
+            $fields = ['*'];
+        }
+        if ($fields) {
+            if ($fields == 'count') {
+                $sql = 'SELECT COUNT(*) '.$sql;
+            } else {
+                $sql = 'SELECT ' .join(",", $fields) .$sql;
+            }
+        }
+
+        $stmt = $this->pdo->query($sql);
+        $stmt->execute();
+        $data = $stmt->fetchAll();
+
+        return $data;
     }
 }
 

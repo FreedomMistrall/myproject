@@ -5,6 +5,7 @@ class Pagination
     public $page;
     public $countPage;
     public $total;
+    public $url;
     public $limit;
 
     function __construct($page, $limit, $total)
@@ -13,12 +14,12 @@ class Pagination
         $this->total = $total;
         $this->countPage = $this->getCountPage();
         $this->page = $this->getPage($page);
+        $this->url = $this->getUrl();
     }
 
     function pagination()
     {
         $pagination = '';
-        $url = $_SERVER['REQUEST_URI'];
         $start = null;
         $back = null;
         $left = null;
@@ -27,26 +28,43 @@ class Pagination
         $next = null;
         $end = null;
 
-        $now = "<a href='/home/show?page=" . "$this->page'>$this->page</a>";
+        $now = "<a> $this->page </a>";
         if ($this->page > 1){
-            $back = "<a href='/home/show?page=" . ($this->page-1) . "'>Back</a>";
+            $back = "<a href='{$this->url}page=" . ($this->page-1) . "'>Back</a>";
         }
         if ($this->page < $this->countPage){
-            $next = "<a href='/home/show?page=" . ($this->page+1) . "'>Next</a>";
+            $next = "<a href='{$this->url}page=" . ($this->page+1) . "'>Next</a>";
         }
         if ($this->page > 3){
-            $start = "<a href='/home/show'>First</a>";
+            $start = "<a href='{$this->url}'>First</a>";
         }
         if ($this->page < $this->countPage - 2){
-            $end = "<a href='/home/show?page=" . "$this->countPage'>Last</a>";
+            $end = "<a href='{$this->url}page=" . "$this->countPage'>Last</a>";
         }
         if (($this->page - 1) > 0){
-            $left = "<a href='/home/show?page=" . ($this->page-1) . "'>" . ($this->page-1) . "</a>";
+            $left = "<a href='{$this->url}page=" . ($this->page-1) . "'>" . ($this->page-1) . "</a>";
         }
         if (($this->page + 1) < $this->countPage){
-            $right = "<a href='/home/show?page=" . ($this->page+1) . "'>" . ($this->page+1) ."</a>";
+            $right = "<a href='{$this->url}page=" . ($this->page+1) . "'>" . ($this->page+1) ."</a>";
         }
         return $start . ' ' . $back . ' ' . $left . ' ' . $now . ' ' . $right . ' ' . $next . ' ' . $end;
+    }
+
+    function getUrl()
+    {
+        $url = explode('?', $_SERVER['REQUEST_URI']);
+        $uri = $url[0]. '?';
+
+        if (isset($url[1]) && $url[1] != ''){
+
+            $params = explode('&',$url[1]);
+            foreach ($params as $param){
+                if(!preg_match("#page=#", $param)){
+                    $uri .= "{$param}&amp";
+                }
+            }
+        }
+        return $uri;
     }
 
     function getStart()

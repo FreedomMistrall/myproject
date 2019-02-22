@@ -6,6 +6,7 @@ class Item {
     public $price;
     public $count;
     public $disc;
+    public $fullDescription;
     public $description;
     public $category_id;
     public $img;
@@ -17,6 +18,7 @@ class Item {
         $this->count = $item['stock'];
         $this->disc = $item['disc'];
         $this->price = $this->getPrice($item['price']);
+        $this->fullDescription = $item['fullDescription'];
         $this->description = $item['description'];
         $this->img = $item['image'];
         $this->img = $this->getNoImage($item['image']);

@@ -4,14 +4,11 @@ class CartModel extends Model
 {
     protected $table = 'cart';
 
-    public function create()
+    public function create($data)
     {
-        $user_id = Auth::userId();
-        $product_id = $_POST['product_id'];
-        $price = $_POST['price'];
-        $count = $_POST['count'];
-        $stmt = $this->connect->prepare("INSERT INTO cart (user_id, product_id, price, count) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param('iiii', $user_id, $product_id, $price, $count);
+        extract($data);
+        $stmt = $this->connect->prepare("INSERT INTO cart (user_id, product_id, count, price) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param('iiii', $user_id, $product_id, $count , $price);
         $stmt->execute();
         $result = $stmt->insert_id;
         return $result;
@@ -25,5 +22,11 @@ class CartModel extends Model
         $res = $stmt->get_result();
         $result = $res->fetch_all(MYSQLI_ASSOC);
         return $result;
+    }
+
+    public function deleteCart($id)
+    {
+        $stmt = $this->pdo->prepare("DELETE FROM cart WHERE user_id = :id");
+        $stmt->execute(array(':id' => $id));
     }
 }

@@ -4,9 +4,9 @@ class CategoryModel extends Model
 {
     protected $table = 'category';
 
-    public function create()
+    public function create($data)
     {
-        $category = $_POST['category'];
+        extract($data);
         $stmt = $this->connect->prepare("INSERT INTO category (category) VALUES (?)");
         $stmt->bind_param('s', $category);
         $stmt->execute();
@@ -14,9 +14,9 @@ class CategoryModel extends Model
         return $result;
     }
 
-    public function update($id)
+    public function update($id,$data)
     {
-        $category = $_POST['category'];
+        extract($data);
         $stmt = $this->connect->prepare("UPDATE category SET category =? WHERE id = $id");
         $stmt->bind_param('s', $category);
         $stmt->execute();

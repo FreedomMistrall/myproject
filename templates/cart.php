@@ -1,14 +1,13 @@
-<?php
-include_once'header.php'; ?>
+<?php include_once'header.php'; ?>
 <p><a href="<?= route('home') ?>">На главную</a></p>
 
 <table class="table table-bordered">
     <thead>
     <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Price</th>
-        <th scope="col">Stock</th>
-        <th scope="col">Summ</th>
+        <th scope="col">Товар</th>
+        <th scope="col">Цена</th>
+        <th scope="col">Кол-во</th>
+        <th scope="col">Общая сумма</th>
         <th scope="col"></th>
     </tr>
     </thead>
@@ -30,9 +29,16 @@ include_once'header.php'; ?>
     <?php endforeach; ?>
     <td></td>
     <td></td>
-    <td><b>Товаров: <?= isset($totalCount) ? array_sum($totalCount) : '0'; ?> шт. </b></td>
+    <td><b>Товаров всего : <?= isset($totalCount) ? array_sum($totalCount) : '0'; ?> шт. </b></td>
         <td class="right b nowrap">
-            <span id="total_cost"><b>Итого : <?= isset($total) ? array_sum($total) : '0'; ?></b></span>
+            <span id="total_cost"><b>Общая стоимость : <?= isset($total) ? array_sum($total) : '0'; ?> грн.</b></span>
         </td>
     </tbody>
 </table>
+
+<p align="center"><a href="<?= route('order')?>" >Оформить заказ</a></p>
+
+
+
+
+<?php include_once'footer.php'; ?>

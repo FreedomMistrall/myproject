@@ -2,3 +2,84 @@
     margin-left: 10px;
     font-family: "Times New Roman";
 }
+.single-top {
+    float: left;
+    width: 47%;
+}
+.single-top-in {
+    float: left;
+    width: 53%;
+}
+
+.sap_tabs{
+    padding: 1em 0;
+}
+.resp-tabs-list {
+    width: 100%;
+    list-style: none;
+    padding: 0;
+}
+.resp-tabs-container {
+    padding: 0px;
+    clear: left;
+}
+.facts{
+    border: 1px solid #D4D1D1;
+    padding: 2em;
+}
+.facts p{
+    color:#767676;
+    font-size:1em;
+    line-height:1.7em;
+    padding:0 0 1em;
+}
+.facts ul li{
+    list-style:none;
+    color:#767676;
+    font-size:1em;
+    padding:0.3em 0;
+}
+#toTop {
+    display: none;
+    text-decoration: none;
+    position: fixed;
+    bottom: 25px;
+    right: 10px;
+    overflow: hidden;
+    width: 52px;
+    height: 52px;
+    border: none;
+    text-indent: 100%;
+    background: url('../images/up.png') no-repeat 0px 0px;
+}
+.single-para h4{
+    font-size:1.5em;
+    color:#747272;
+    line-height:1.5em;
+    font-weight: 600;
+}
+label.add-to{
+    display:block;
+    font-size: 2em;
+    color: #fa7455;
+}
+.single-para p{
+    font-size:1em;
+    color:#747272;
+    line-height:1.8em;
+}
+a.cart{
+    padding: 5px;
+    color: #FFF;
+    background: #615c85;
+    margin: 1.5em 0 0;
+    font-size: 1em;
+    display: block;
+    line-height: 1.6em;
+    width: 32%;
+    text-align: center;
+    text-decoration:none;
+}
+a.cart:hover{
+    background: #8fbf00;
+}

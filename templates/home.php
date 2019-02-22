@@ -50,4 +50,11 @@ include_once 'navbar.php';
 </div>
 <?php endif; ?>
 
-<?php include_once 'templates/footer.php'; ?>
+<?php
+if(!$cookieOk){
+    include 'templates/components/cookie.php';
+}
+?>
+
+<?php include_once 'footer.php'; ?>
+

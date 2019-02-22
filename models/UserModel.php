@@ -4,10 +4,9 @@ class UserModel extends Model {
     
     protected $table = 'users';
     
-    public function create(){
-        $username = $_POST['username'];
-        $email = $_POST['email'];
-        $password = md5($_POST['password']);
+    public function create($data)
+    {
+        extract($data);
         $stmt = $this->connect->prepare("INSERT INTO users (email, username, password) VALUES (? ,? ,?)");
         $stmt->bind_param('sss', $email, $username, $password);
         $stmt->execute();
@@ -15,8 +14,9 @@ class UserModel extends Model {
         return $result;
     }
     
-    public function read(){
-        $email = $_POST['email'];
+    public function read($data)
+    {
+        extract($data);
         $stmt = $this->connect->prepare('SELECT * FROM users WHERE email = ?');
         $stmt->bind_param('s', $email);
         $stmt->execute();

@@ -24,7 +24,10 @@ class CategoryController extends Controller
         if(!isset($_GET['id'])) {
             if (!empty($_POST['submit'])) {
                 $category = $_POST['category'];
-                $category = $this->model->create();
+                $data = [
+                    'category' => $category,
+                ];
+                $this->model->create($data);
                 redirect('/category/show');
             }
             $data = [];
@@ -33,7 +36,11 @@ class CategoryController extends Controller
             $id = $_GET['id'];
             $category = $this->model->readId($id);
             if (isset($_POST['submit'])) {
-                $this->model->update($id);
+                $category = $_POST['category'];
+                $data = [
+                    'category' => $category,
+                ];
+                $this->model->update($id,$data);
                 redirect('/category/show');
             }
             $data = [

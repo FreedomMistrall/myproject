@@ -15,7 +15,10 @@ class LoginController extends Controller
     {
         if (!empty($_POST)) {
             $email = $_POST['email'];
-            $user = $this->model->read(['email' => $email]);
+            $data =[
+                'email' => $email,
+            ];
+            $user = $this->model->read($data);
 
             if(!$user) {
                 $errors = 'Неверный E-mail.';
@@ -55,7 +58,10 @@ class LoginController extends Controller
     {
         if (!empty($_POST)) {
             $email = $_POST['email'];
-            $user = $this->model->read(['email' => $email]);
+            $data =[
+                'email' => $email,
+            ];
+            $user = $this->model->read($data);
             $err = $this->validation($user);
             $err2 = $this->checkRegistr($user);
             $errors = array_merge($err,$err2);
@@ -70,10 +76,17 @@ class LoginController extends Controller
                 oldData($oldData);
                 redirect('/login/registr');
             }else{
-            $data = $_POST;
-            $userId = $this->model->create($data);
-            $_SESSION['login_user_id'] = $userId;
-            redirect('/');
+                $username = $_POST['username'];
+                $email = $_POST['email'];
+                $password = md5($_POST['password']);
+                $data = [
+                    'username' => $username,
+                    'email' => $email,
+                    'password' => $password
+                ];
+                $userId = $this->model->create($data);
+                $_SESSION['login_user_id'] = $userId;
+                redirect('/');
             }
         }
         $data = [];

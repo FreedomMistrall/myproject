@@ -2,6 +2,7 @@
 session_start();
 require_once 'config/config.php';
 include_once 'core/function.php';
+require_once 'vendor/autoload.php';
 
 spl_autoload_register('searchClass');
 function searchClass($class_name)
@@ -24,6 +25,7 @@ if ((isset ($_POST['formCheck'])) and (isset($_POST['formSubmit'])))
 $config = config('db');
 $db = Database::getInstance($config);
 $db_connect = $db->connection;
+$db_pdo = $db->pdo;
 
 $routes = [
     ['name' => 'home', 'url' => '', 'do' => 'HomeController/index'],
@@ -42,6 +44,9 @@ $routes = [
     ['name' => 'cart', 'url' => '/cart/show', 'do' => 'CartController/show'],
     ['name' => 'add', 'url' => '/cart/add', 'do' => 'CartController/addCart'],
     ['name' => 'deleteCart', 'url' => '/cart/delete', 'do' => 'CartController/deleteCart'],
+    ['name' => 'order', 'url' => '/order/show', 'do' => 'CartController/order'],
+    ['name' => 'product', 'url' => '/product/show', 'do' => 'OneItemController/show'],
+    ['name' => 'imageShow', 'url' => '/image/show', 'do' => 'ImagesController/show'],
 ];
 
 function remove($url)
