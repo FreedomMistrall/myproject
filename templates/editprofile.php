@@ -1,5 +1,5 @@
-<?php
-require_once 'header.php'; ?>
+<?php include_once'header.php'; ?>
+
 <title>Изменить данные</title>
 <a href="<?=route('user'); ?>">Назад</a>
 

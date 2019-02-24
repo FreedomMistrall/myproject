@@ -1,3 +1,5 @@
+<?php include_once'header.php'; ?>
+
 <a href="<?=route('category')?>">Назад</a>
 
 <form action="" method="post">

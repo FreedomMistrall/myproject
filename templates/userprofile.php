@@ -1,3 +1,4 @@
+<?php include_once'header.php'; ?>
 
 <title>Профиль</title>
 <a href="<?=route('home'); ?>">На главную</a>

@@ -1,3 +1,5 @@
+<?php include_once'header.php'; ?>
+
 <a href="<?=route('admin')?>">Назад</a>
 
 <form action="" method="post">

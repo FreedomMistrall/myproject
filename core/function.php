@@ -60,21 +60,27 @@ function routeUrl($name)
     $routes = [
         ['name' => 'home', 'url' => '/', 'do' => 'HomeController/index'],
         ['name' => 'show', 'url' => '/home/show', 'do' => 'HomeController/index'],
+
         ['name' => 'login', 'url' => '/login/login', 'do' => 'LoginController/login'],
         ['name' => 'registr', 'url' => '/login/registr', 'do' => 'LoginController/registr'],
         ['name' => 'logout', 'url' => '/login/logout', 'do' => 'LoginController/logout'],
+
         ['name' => 'user', 'url' => '/user/user', 'do' => 'UserController/user'],
         ['name' => 'user', 'url' => '/user/edit', 'do' => 'UserController/edit'],
+
         ['name' => 'admin', 'url' => '/admin/show', 'do' => 'AdminController/show'],
         ['name' => 'edit', 'url' => '/admin/edit', 'do' => 'AdminController/add'],
         ['name' => 'deleteAdmin', 'url' => '/admin/delete', 'do' => 'AdminController/delete'],
+
         ['name' => 'category', 'url' => '/category/show', 'do' => 'CategoryController/show'],
         ['name' => 'editCategory', 'url' => '/category/edit', 'do' => 'CategoryController/add'],
         ['name' => 'deleteCategory', 'url' => '/category/delete', 'do' => 'CategoryController/delete'],
+
         ['name' => 'cart', 'url' => '/cart/show', 'do' => 'CartController/show'],
         ['name' => 'add', 'url' => '/cart/add', 'do' => 'CartController/addCart'],
         ['name' => 'deleteCart', 'url' => '/cart/delete', 'do' => 'CartController/deleteCart'],
         ['name' => 'order', 'url' => '/order/show', 'do' => 'CartController/order'],
+
         ['name' => 'product', 'url' => '/product/show', 'do' => 'OneItemController/show'],
         ['name' => 'imageShow', 'url' => '/image/show', 'do' => 'ImagesController/show'],
     ];
@@ -121,4 +127,9 @@ function sendMail($data)
 // Send the message
     $result = $mailer->send($message);
     return $result;
+}
+
+function view($template)
+{
+    include('templates/'.$template.'.php');
 }

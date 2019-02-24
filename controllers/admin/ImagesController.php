@@ -1,5 +1,4 @@
 <?php
-include_once'templates/header.php';
 
 class ImagesController extends Controller
 {

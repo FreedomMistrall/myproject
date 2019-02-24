@@ -15,8 +15,7 @@ function searchClass($class_name)
     }
 }
 
-if ((isset ($_POST['formCheck'])) and (isset($_POST['formSubmit'])))
-{
+if ((isset ($_POST['formCheck'])) and (isset($_POST['formSubmit']))) {
 	setcookie('myCookie', 'userCookie', time()+3600*24*365); 
 	header('Location: / ');
 	exit();
@@ -30,28 +29,34 @@ $db_pdo = $db->pdo;
 $routes = [
     ['name' => 'home', 'url' => '', 'do' => 'HomeController/index'],
     ['name' => 'show', 'url' => '/home/show', 'do' => 'HomeController/index'],
+
     ['name' => 'login', 'url' => '/login/login', 'do' => 'LoginController/login'],
     ['name' => 'registr', 'url' => '/login/registr', 'do' => 'LoginController/registr'],
     ['name' => 'logout', 'url' => '/login/logout', 'do' => 'LoginController/logout'],
+
     ['name' => 'user', 'url' => '/user/user', 'do' => 'UserController/user'],
     ['name' => 'user', 'url' => '/user/edit', 'do' => 'UserController/edit'],
+
     ['name' => 'admin', 'url' => '/admin/show', 'do' => 'AdminController/show'],
     ['name' => 'edit', 'url' => '/admin/edit', 'do' => 'AdminController/add'],
     ['name' => 'deleteAdmin', 'url' => '/admin/delete', 'do' => 'AdminController/delete'],
+
     ['name' => 'category', 'url' => '/category/show', 'do' => 'CategoryController/show'],
     ['name' => 'editCategory', 'url' => '/category/edit', 'do' => 'CategoryController/add'],
     ['name' => 'deleteCategory', 'url' => '/category/delete', 'do' => 'CategoryController/delete'],
+
     ['name' => 'cart', 'url' => '/cart/show', 'do' => 'CartController/show'],
     ['name' => 'add', 'url' => '/cart/add', 'do' => 'CartController/addCart'],
     ['name' => 'deleteCart', 'url' => '/cart/delete', 'do' => 'CartController/deleteCart'],
     ['name' => 'order', 'url' => '/order/show', 'do' => 'CartController/order'],
+
     ['name' => 'product', 'url' => '/product/show', 'do' => 'OneItemController/show'],
     ['name' => 'imageShow', 'url' => '/image/show', 'do' => 'ImagesController/show'],
 ];
 
 function remove($url)
 {
-    if($url) {
+    if ($url) {
         $params = explode('?', $url,2);
         if(strpos($params[0], '=') === false) {
             return rtrim($params[0],'/');
@@ -67,7 +72,13 @@ $route = array_filter($routes, function ($el) use($query)
 {
     return ($el['url'] == $query);
 });
+if (!$route){
+    require 'templates/page404.php';
+    exit;
+}
+
 $route = (array_values($route))[0];
 list($contoller, $action) = explode('/', $route['do']);
 $c = new $contoller();
 $c->$action();
+

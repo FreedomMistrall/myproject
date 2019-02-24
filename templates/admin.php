@@ -1,3 +1,5 @@
+<?php include_once'header.php'; ?>
+
 <p style="margin-left: 10px;"><a href="<?= route('home') ?>">На главную</a></p>
 <br>
 <p style="margin-left: 10px;"><a href="<?= route('category') ?>">Добавить/Редактировать категории</a></p>

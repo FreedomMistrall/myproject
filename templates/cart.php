@@ -1,4 +1,5 @@
 <?php include_once'header.php'; ?>
+
 <p><a href="<?= route('home') ?>">На главную</a></p>
 
 <table class="table table-bordered">
