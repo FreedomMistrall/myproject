@@ -64,7 +64,6 @@ class CartController extends Controller
             $name = $_POST['name'];
             $email = $user['email'];
             $cart = $this->model->readCart(Auth::userId());
-            debug($cart);
             $data = [
                 'email' => $email,
                 'orderId' => $orderId,
