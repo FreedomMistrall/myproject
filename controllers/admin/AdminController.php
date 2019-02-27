@@ -11,7 +11,7 @@ class AdminController extends Controller
 
     public function show()
     {
-        $items = $this->model->getDataItems(0, 100);
+        $items = $this->model->listItems();
         $data = [
             'items' => $items,
         ];

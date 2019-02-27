@@ -12,6 +12,12 @@ class OneItemController extends Controller
 
     public function show()
     {
+        if(isset($_GET['id'])){
+            if(!isset($_SESSION['itemsId'])){
+                $_SESSION['itemsId'] = [];
+            }
+            array_unshift($_SESSION['itemsId'], $_GET['id']);
+        }
         $user = Auth::userId();
         $id = (int)$_GET['id'];
         $item = new Item($this->model->readId($id));

@@ -18,7 +18,7 @@ include_once 'navbar.php';
                             </ol>
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                    <img class="d-block w-100" src="/assets/image/<?= $item->img ?>" alt="First slide">
+                                    <img class="d-block w-100" src="/assets/image/<?= $item->image ?>" alt="First slide">
                                 </div>
                                 <?php foreach ($images as $image) : ?>
                                 <div class="carousel-item">

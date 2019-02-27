@@ -20,8 +20,8 @@ class Item {
         $this->price = $this->getPrice($item['price']);
         $this->fullDescription = $item['fullDescription'];
         $this->description = $item['description'];
-        $this->img = $item['image'];
-        $this->img = $this->getNoImage($item['image']);
+        $this->image = $item['image'];
+        $this->image = $this->getNoImage($item['image']);
     }
 
     protected function getPrice($price) {
@@ -35,9 +35,9 @@ class Item {
     }
 
     protected function getNoImage(){
-        $img = $this->img;
-        if(!$this->img){
-            $img = 'No_image.jpg';
-        }return $img;
+        $image = $this->image;
+        if(!$this->image){
+            $image = 'No_image.jpg';
+        }return $image;
     }
 }

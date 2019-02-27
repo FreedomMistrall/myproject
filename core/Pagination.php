@@ -60,7 +60,7 @@ class Pagination
             $params = explode('&',$url[1]);
             foreach ($params as $param){
                 if(!preg_match("#page=#", $param)){
-                    $uri .= "{$param}&amp";
+                    $uri .= "{$param}&";
                 }
             }
         }

@@ -31,7 +31,7 @@
             <td><?= $item->price ?></td>
             <td><?= $item->count ?></td>
             <td><?= $item->disc ?></td>
-            <td><a href="<?= route('imageShow', ['id'=>$item->id])?>"><?= $item->img ?></a></td>
+            <td><a href="<?= route('imageShow', ['id'=>$item->id])?>"><?= $item->image ?></a></td>
             <td><a href="<?= route('deleteAdmin')?>/?id=<?=$item->id?>">Удалить</a></td>
         </tr>
     <?php endforeach; ?>

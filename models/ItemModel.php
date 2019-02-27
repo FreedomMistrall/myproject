@@ -3,18 +3,6 @@
 class ItemModel extends Model {
     
     protected $table = 'products';
-    
-    public function getDataItems($start, $limit)
-    {
-    $result = $this->connect->query("SELECT * FROM products LIMIT $start, $limit");
-    $dataItems = $result->fetch_all(MYSQLI_ASSOC);
-
-    $dataItemsObj = [];
-        foreach ($dataItems as $item) {
-            $dataItemsObj[] = new Item($item);
-        }
-        return $dataItemsObj;
-    }
 
     public function create($data)
     {
@@ -36,41 +24,75 @@ class ItemModel extends Model {
         return $result;
     }
 
-    public function listItems($filter = [], $fields = null)
+    public function listItems($filter = [], $fields = null, $order = null, $limit = null, $offset = null)
     {
         $sql = " FROM $this->table ";
         if (!empty($filter)) {
             $sql = $sql . ' WHERE ';
             if (key_exists('cat', $filter)) {
-                $sql .= 'category_id = ?';
-                debug($sql);
+                $sql .= 'category_id = ? AND ';
             }
-            if (key_exists('priceM', $filter)) {
-                $sql .= 'price < ?';
+            if (key_exists('priceMin', $filter)) {
+                $sql .= "price > {$filter['priceMin']} AND ";
             }
-            /*
-            if (key_exists('ids', $filter)) {
-                $sql .= 'id IN ?';
-                $filter['ids'] = "(". join(",", $filter['ids']) .")";
+            if (key_exists('priceMax', $filter)) {
+                $sql .= " price < {$filter['priceMax']} AND ";
             }
-            */
+            if (key_exists('search', $filter)) {
+                $sql .= 'name LIKE "%' . $filter['search'] . '%"';
+            }
+            $sql = rtrim($sql, 'AND ');
+        }
+        if ($order){
+            $sql = $sql . ' ORDER BY ';
+            if (key_exists('min', $order)) {
+                $sql .= 'price ASC';
+            }
+            if (key_exists('max', $order)) {
+                $sql .= ' price DESC';
+            }
+            if (key_exists('new', $order)) {
+                $sql .= ' id DESC';
+            }
+        }
+        if ($limit){
+            $sql = $sql . ' LIMIT ' . $limit;
+            if($offset) {
+                $sql .= ' OFFSET ' . $offset;
+            }
         }
         if(!$fields) {
             $fields = ['*'];
         }
         if ($fields) {
             if ($fields == 'count') {
-                $sql = 'SELECT COUNT(*) '.$sql;
+                $sql = 'SELECT COUNT(*) AS count ' . $sql;
+            } elseif ($fields == 'min') {
+                $sql = 'SELECT MIN(price) AS min ' . $sql;
+            } elseif ($fields == 'max') {
+                $sql = 'SELECT MAX(price) AS max ' . $sql;
             } else {
-                $sql = 'SELECT ' .join(",", $fields) .$sql;
+                $sql = 'SELECT ' . join(",", $fields) . $sql;
+
             }
         }
 
-        $stmt = $this->pdo->query($sql);
-        $stmt->execute();
+        $param = [];
+        foreach ($filter as $k => $v){
+            $param[] = $v;
+        }
+        
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($param);
         $data = $stmt->fetchAll();
-
-        return $data;
+        if ($fields == 'count' or $fields == 'min' or $fields == 'max') {
+            return $data[0];
+        }
+        $dataItemsObj = [];
+        foreach ($data as $item) {
+            $dataItemsObj[] = new Item($item);
+        }
+        return $dataItemsObj;
     }
 }
 

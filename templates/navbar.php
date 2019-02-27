@@ -3,6 +3,8 @@
         <a class="btn btn-secondary dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown"
          aria-haspopup="true" aria-expanded="false" style="background-color: #DDBEC3;"><b>Меню</b></a>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" style="background-color: #DDBEC3;">
+            <a class="dropdown-item" href="<?=route('home'); ?>?cat_id=1">Мебель</a>
+            <a class="dropdown-item" href="<?=route('home'); ?>?cat_id=2">Техника</a>
             <a class="dropdown-item" href="<?=route('home'); ?>">На Главную</a>
         </div>
     </div>

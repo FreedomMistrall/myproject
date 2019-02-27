@@ -40,6 +40,7 @@ class CartController extends Controller
                 'price' => $price
             ];
             $this->model->create($data);
+            //splashMessage('Товар добавлен в корзину', 'alert-success');
         }
 
     }

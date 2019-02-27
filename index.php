@@ -30,11 +30,11 @@ $routes = [
     ['name' => 'home', 'url' => '', 'do' => 'HomeController/index'],
     ['name' => 'show', 'url' => '/home/show', 'do' => 'HomeController/index'],
 
-    ['name' => 'login', 'url' => '/login/login', 'do' => 'LoginController/login'],
+    ['name' => 'login', 'url' => '/login/index', 'do' => 'LoginController/login'],
     ['name' => 'registr', 'url' => '/login/registr', 'do' => 'LoginController/registr'],
     ['name' => 'logout', 'url' => '/login/logout', 'do' => 'LoginController/logout'],
 
-    ['name' => 'user', 'url' => '/user/user', 'do' => 'UserController/user'],
+    ['name' => 'user', 'url' => '/user/index', 'do' => 'UserController/user'],
     ['name' => 'user', 'url' => '/user/edit', 'do' => 'UserController/edit'],
 
     ['name' => 'admin', 'url' => '/admin/show', 'do' => 'AdminController/show'],

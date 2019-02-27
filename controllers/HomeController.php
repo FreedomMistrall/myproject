@@ -7,29 +7,60 @@ class HomeController extends Controller
     function __construct()
     {
         $this->model = new ItemModel();
+
     }
 
     public function index()
     {
+        $user = Auth::user();
+        $userAdmin = Auth::isAdmin();
+        $filter = [];
+        if (isset($_GET['cat_id'])) {
+            $filter['cat'] = (int)$_GET['cat_id'];
+        }
+        if (isset($_POST['sort'])) {
+            $min = $this->model->listItems($filter, 'min')['min'];
+            $max = $this->model->listItems($filter, 'max')['max'];
+            $filter ['priceMin'] = !empty($_POST['priceMin']) ? (int)$_POST['priceMin'] : $min;
+            $filter ['priceMax'] = !empty($_POST['priceMax']) ? (int)$_POST['priceMax'] : $max;
+        }
+
+        $this->model->listItems($filter,$fields = null,$order=null);
+        if(isset($_GET['sort'])){
+            if ($_GET['sort'] == 'price-asc') {
+                $order['min'] = $_GET['sort'];
+
+            }
+            if ($_GET['sort'] == 'price-desc'){
+                $order['max'] = $_GET['sort'];
+
+            }
+            if ($_GET['sort'] == 'new'){
+                $order['new'] = $_GET['sort'];
+
+            }
+        }
+
+        if (!empty($_GET['search'])) {
+            $filter ['search'] = $_GET['search'];
+        }
+
         $limit = 3;
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $total = $this->model->count();
+        $total = $this->model->listItems($filter,'count')['count'];
         $pag = new Pagination($page, $limit, $total);
         $start = $pag->getStart();
         $pagination = $pag->pagination();
-        $items=$this->model->getDataItems($start, $limit);
-        $user = Auth::user();
-        $userAdmin = Auth::isAdmin();
-        $listItems = $this->model->listItems($filter = []);
+
+        $items = $this->model->listItems($filter,$fields = null,$order,$limit,$start);
         $data = [
             'items' => $items,
             'oneItem'=>$this->getId($items),
             'cookieOk' => $this->getCookie(),
-            'last3ItemsId' => $this->last3ItemsId($items),
+            'last3ItemsId' => $this->last3ItemsId($this->model->listItems()),
             'user' => $user,
             'userAdmin' => $userAdmin,
             'pagination' => $pagination,
-            'listItems' => $listItems,
         ];
         $this->view('home',$data);
     }
@@ -47,12 +78,6 @@ class HomeController extends Controller
 
     public function last3ItemsId($items)
     {
-        if(isset($_GET['id'])){
-            if(!isset($_SESSION['itemsId'])){
-                $_SESSION['itemsId'] = [];
-            }
-            array_unshift($_SESSION['itemsId'], $_GET['id']);
-        }
         if (!empty($_SESSION['itemsId'])){
         $_SESSION['itemsId'] = array_unique($_SESSION['itemsId']);
         $_SESSION['itemsId'] = array_slice($_SESSION['itemsId'],0,3);
